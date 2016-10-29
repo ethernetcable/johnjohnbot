@@ -11,6 +11,7 @@ ACCESS_SECRET = 'xxxx'
 
 twitter = Twython(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_SECRET)
 
+# tweets every other word of someone's tweets
 def every_other(acc):
     try:
         orig_tl = twitter.get_user_timeline(screen_name=acc, count=1)
