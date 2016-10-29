@@ -42,17 +42,25 @@ def every_other(acc):
         sleep(20)
         every_other(acc)
 
+# prints a random tweet
 def random():
-    for letter in string.ascii_lowercase:
-        results = twitter.search(q='letter', count=1)
-        for result in results['statuses']:
-            user = screenname = "@" + result['user']['screen_name'];
-            tweet = result['text']
-            if len(user) + len(tweet) + 2 <= 140:  # the 2 is the colon and the space in the output
-                print(user + ': ' + tweet)
-            else:
-                extra = (len(user) + len(tweet)) - 140
-                tweet =
-
+    try:
+        while True:
+            for letter in string.lowercase:
+                results = twitter.search(q=letter + ' filter:safe', count=1, lang='en')
+                for result in results['statuses']:
+                    tweet = result['text']
+                    tweet = tweet.split()
+                    for item in tweet[:]:
+                        if '@' in item or 'http' in item:
+                            tweet.remove(item)
+                    tweet = ' '.join(tweet)
+                    twitter.update_status(status=tweet + '\n')
+                    print('tweeted: ' + tweet + '\n')
+                    sleep(300)
+    except TwythonError as e:
+        print(e)
+        sleep(20)
+        random()
+        
 random()
-
