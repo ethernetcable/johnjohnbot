@@ -3,6 +3,7 @@ import sys
 from time import sleep
 from twython import Twython, TwythonError
 import subprocess
+import string
 
 CONSUMER_KEY = 'xxxx'
 CONSUMER_SECRET = 'xxxx'
