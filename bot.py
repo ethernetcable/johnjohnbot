@@ -53,7 +53,7 @@ def random():
                     tweet = result['text']
                     tweet = tweet.split()
                     for item in tweet[:]:
-                        if '@' in item or 'http' in item:
+                        if '@' in item or 'http' in item or 'RT' in item:
                             tweet.remove(item)
                     tweet = ' '.join(tweet)
                     twitter.update_status(status=tweet + '\n')
