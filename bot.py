@@ -1,8 +1,6 @@
 #!/usr/bin/env python
-import sys
 from time import sleep
 from twython import Twython, TwythonError
-import subprocess
 import string
 
 # get your own api stuff you lazy so and so
@@ -20,13 +18,12 @@ def every_other(acc):
         orig_tl = twitter.get_user_timeline(screen_name=acc, count=1)
         orig_twt = orig_tl[0]
         orig_id = orig_twt['id_str']
-        id = orig_id
         while True:
             # gets id of latest tweet on timeline every 20 secs
             g_timeline = twitter.get_user_timeline(screen_name=acc, count=1)
             g_tweet = g_timeline[0]
             g_id = g_tweet['id_str']
-            if g_id != id: # in case of new tweet
+            if g_id != orig_id: # in case of new tweet
                 g_tweet = g_tweet['text'].split()
                 g_tweet = ' '.join(g_tweet[::2])
                 # remove links
@@ -36,7 +33,7 @@ def every_other(acc):
                 # tweet the thing
                 twitter.update_status(status=g_tweet)
                 print('tweeted: ' + g_tweet)
-                id = g_id
+                orig_id = g_id
                 sleep(20)
                 continue
             else:
